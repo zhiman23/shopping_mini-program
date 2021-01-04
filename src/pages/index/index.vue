@@ -4,6 +4,7 @@
 		<view>
 			<text class="title">{{title}}</text>
 		</view>
+		
 	</view>
 </template>
 
@@ -11,11 +12,11 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: '杨昕炎'
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 
