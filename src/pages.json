@@ -5,6 +5,36 @@
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
+		},
+		{
+			"path":"pages/category/main",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
+		},
+		{
+			"path":"pages/cart/main",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path":"pages/user/main",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path":"pages/goods_list/main",
+			"style": {
+				"navigationBarTitleText": "商品列表"
+			}
+		},
+		{
+			"path":"pages/goods_detail/main",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
 		}
 	],
 	"globalStyle": {
@@ -12,5 +42,35 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tarBar":{
+		"color":"#737373",
+		"selectedColor":"#EB4450",
+		"list":[
+			{
+				"pagePath": "pages/index/main",
+				"text": "首页",
+				"iconPath": "static/index.png",
+				"selectedIconPath": "static/index_selected.png"
+			},
+			{
+				"pagePath": "pages/category/main",
+				"text": "分类",
+				"iconPath": "static/category.png",
+				"selectedIconPath": "static/category_selected.png"
+			},
+			{
+				"pagePath": "pages/cart/main",
+				"text": "购物车",
+				"iconPath": "static/cart.png",
+				"selectedIconPath": "static/cart_selected.png"
+			},
+			{
+				"pagePath": "pages/user/main",
+				"text": "我的",
+				"iconPath": "static/user.png",
+				"selectedIconPath": "static/user_selected.png"
+			}
+		]
 	}
 }
