@@ -39,6 +39,40 @@
         />
       </navigator>
     </view>
+	<!-- 首页楼层 -->
+	 <view
+      v-for="(item,index) in floorData"
+      :key="index"
+      class="floor"
+    >
+      <!-- 楼层标题 -->
+      <view class="floor_title">
+        <image
+          class="floor_title_image"
+          :src="item.floor_title.image_src"
+          mode="aspectFill"
+        />
+      </view>
+      <!-- 楼层列表 -->
+      <view class="floor_list">
+        <navigator
+          class="floor_list_item"
+          v-for="item2 in item.product_list"
+          :key="item2.name"
+          :open-type="item2.open_type"
+          :url="item2.navigator_url"
+          hover-class="none"
+        >
+          <!-- 注意，小程序中属性绑定用反引号会报错 -->
+          <image
+            class="floor_list_image"
+            :src="item2.image_src"
+            mode="aspectFill"
+            :style="'width:'+item2.image_width+'rpx'"
+          />
+        </navigator>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -52,6 +86,7 @@ export default {
     return {
 	  movies: [],
 	  navi:[],
+	  floorData:[]
     };
   },
   onLoad() {
@@ -67,6 +102,18 @@ export default {
 		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/catitems',
 		  success:(res)=>{
 			  this.navi=res.data.message
+		  }
+	  }),
+	  //首页导航
+	  uni.request({
+		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/floordata',
+		  success:(res)=>{
+			  res.data.message.forEach((item)=>{
+				  item.product_list.forEach((item2)=>{
+					  item2.navigator_url=item2.navigator_url.replace("?","/main?");
+				  })
+			  })
+			  this.floorData=res.data.message
 		  }
 	  })
   },
@@ -96,5 +143,35 @@ export default {
   width: 128rpx;
   height: 140rpx;
   margin-top: 20rpx;
+}
+.floor {
+  margin-top: 10rpx;
+  .floor_title {
+    .floor_title_image {
+      width: 750rpx;
+      height: 60rpx;
+    }
+  }
+
+  .floor_list {
+    // 检测浮动的子元素，清除浮动带来的影响
+    overflow: hidden;
+    .floor_list_item {
+      // 浮动实现环绕效果
+      float: left;
+      margin-left: 13rpx;
+      margin-bottom: 10rpx;
+      &:nth-child(1) {
+        // 第一个导航链接里面的图片变高
+        .floor_list_image {
+          height: 386rpx;
+        }
+      }
+      .floor_list_image {
+        height: 188rpx;
+        vertical-align: top;
+      }
+    }
+  }
 }
 </style>
