@@ -13,8 +13,13 @@
 	  indicator-color="#CCC"
 	  indicator-active-color="#EA4350"
     >
-      <swiper-item v-for="item in movies" :key="item.goods_id">
-        <image class="swiper_image" :src="item.image_src" mode="aspectFill"/>
+      <swiper-item 
+	  v-for="item in movies" 
+	  :key="item.goods_id">
+        <image 
+		class="swiper_image" 
+		:src="item.image_src" 
+		mode="aspectFill"/>
       </swiper-item>
     </swiper>
   </view>
