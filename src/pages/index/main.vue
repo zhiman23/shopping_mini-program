@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<search />
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
 			<text class="title">{{title}}</text>
@@ -9,7 +10,11 @@
 </template>
 
 <script>
+import search from "@/components/search/index"
 	export default {
+		components:{
+			search
+		},
 		data() {
 			return {
 				title: '杨昕炎'

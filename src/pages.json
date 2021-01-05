@@ -40,7 +40,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#fec22c",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tarBar":{
