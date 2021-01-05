@@ -1,55 +1,57 @@
 <template>
-	<view class="content">
-		<search />
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-		
-	</view>
+  <view class="content">
+    <!-- 头部搜索框 -->
+    <search />
+    <!-- 轮播图 -->
+    <swiper
+      class="swiper"
+      autoplay
+      indicator-dots
+      interval="3000"
+      duration="1000"
+	  circular
+	  indicator-color="#CCC"
+	  indicator-active-color="#EA4350"
+    >
+      <swiper-item v-for="item in movies" :key="item.goods_id">
+        <image class="swiper_image" :src="item.image_src" mode="aspectFill"/>
+      </swiper-item>
+    </swiper>
+  </view>
 </template>
 
 <script>
-import search from "@/components/search/index"
-	export default {
-		components:{
-			search
-		},
-		data() {
-			return {
-				title: '杨昕炎'
-			}
-		},
-		onLoad() {
-			
-		},
-		methods: {
-
-		}
-	}
+import search from "@/components/search/index";
+export default {
+  components: {
+    search,
+  },
+  data() {
+    return {
+      movies: [],
+    };
+  },
+  onLoad() {
+	  uni.request({
+		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
+		  success:(res)=>{
+			  this.movies=res.data.message
+		  }
+	  })
+  },
+  methods: {},
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<style lang="less" scoped>
+.swiper {
+  width: 750rpx;
+  height: 340rpx;
+}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+.swiper image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 </style>
