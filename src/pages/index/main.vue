@@ -22,6 +22,23 @@
 		mode="aspectFill"/>
       </swiper-item>
     </swiper>
+	<!-- 入口导航 -->
+	 <view class="nav">
+      <navigator
+        v-for="item in navi"
+        :key="item.name"
+        class="nav_item"
+        hover-class="none"
+        :open-type="item.open_type"
+        :url="item.navigator_url"
+      >
+        <image
+          class="nav_image"
+          :src="item.image_src"
+          mode="aspectFill"
+        />
+      </navigator>
+    </view>
   </view>
 </template>
 
@@ -33,14 +50,23 @@ export default {
   },
   data() {
     return {
-      movies: [],
+	  movies: [],
+	  navi:[],
     };
   },
   onLoad() {
+	  //轮播图
 	  uni.request({
 		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
 		  success:(res)=>{
 			  this.movies=res.data.message
+		  }
+	  }),
+	  //导航栏
+	  uni.request({
+		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/catitems',
+		  success:(res)=>{
+			  this.navi=res.data.message
 		  }
 	  })
   },
@@ -58,5 +84,17 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav_image {
+  display: inline-block;
+  width: 128rpx;
+  height: 140rpx;
+  margin-top: 20rpx;
 }
 </style>
