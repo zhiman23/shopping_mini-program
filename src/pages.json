@@ -38,10 +38,14 @@
 		}
 	],
 	"globalStyle": {
+		"navigationStyle": "default",
+		"pageOrientation": "auto",
+		"enablePullDownRefresh": true,
+		"backgroundTextStyle":"light",
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#fec22c",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarBackgroundColor": "#fec22c",  //顶部颜色
+		"backgroundColor": "#eb4450"  //下拉颜色
 	},
 	"tarBar":{
 		"color":"#737373",
