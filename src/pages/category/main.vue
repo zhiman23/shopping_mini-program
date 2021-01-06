@@ -8,7 +8,13 @@
       class="cate_left"
       scroll-y
       >
-      <view>左边滚动容器</view>
+       <view
+          v-for="item in cateLeft"
+          :key="item.cat_id"
+          class="cate_left_item"
+        >
+          {{ item.cat_name }}
+        </view>
       </scroll-view>
       <scroll-view 
       class="cate_right"
@@ -25,6 +31,27 @@ import search from "@/components/search/index.vue"
 export default {
   components:{
     search
+  },
+  data(){
+    return {
+      cateLeft:[],
+    }
+  },
+  onLoad(){
+    uni.request({
+      url:"https://api-hmugo-web.itheima.net/api/public/v1/categories",
+      success:(res)=>{
+        console.log(res.data.message);
+        const cateAll=res.data.message;
+        // this.cateLeft=cateAll.map((item)=>{
+        //   return {
+        //     cat_name:item.cat_name,
+        //     cat_id:item.cat_id
+        //   }
+        // })
+        this.cateLeft=cateAll.map(({cat_name,cat_id})=>({cat_name,cat_id}))
+      }
+    })
   }
 }
 </script>
