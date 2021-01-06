@@ -76,5 +76,20 @@
 				"selectedIconPath": "static/user_selected.png"
 			}
 		]
+	},
+	"condition":{
+		"current":1,
+		"list":[
+			{
+				"name":"pages/index/main",
+				"path":"pages/index/main",
+				"query":""
+			},
+			{
+				"name":"pages/catepory/main",
+				"path":"pages/category/main",
+				"query":""
+			}
+		]
 	}
 }

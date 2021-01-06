@@ -1,8 +1,12 @@
 <template>
-  <view>分类页</view>
+  <view>
+    <search />
+
+  </view>
 </template>
 
 <script>
+import search from "@/components/search/index"
 export default {
 
 }
