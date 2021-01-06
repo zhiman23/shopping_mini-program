@@ -7,9 +7,13 @@
       <!-- 左侧 -->
       <scroll-view class="cate_left" scroll-y>
         <view
-          v-for="item in cateLeft"
+          v-for="(item,index) in cateLeft"
           :key="item.cat_id"
           class="cate_left_item"
+          @tap="changeTabs(index)"
+          :class="{
+            active:activeIndex === index
+          }"
         >
           {{ item.cat_name }}
         </view>
@@ -44,6 +48,8 @@ export default {
     return {
       cateLeft: [],
       cateRight: [],
+      activeIndex:0,
+      cateAll:[]
     };
   },
   onLoad() {
@@ -52,6 +58,8 @@ export default {
       success: (res) => {
         console.log(res.data.message);
         const cateAll = res.data.message;
+           // 为了方便在不同的函数中都能找到分类数据，把 cateAll 保存到页面组件中
+        this.cateAll = cateAll;
         // this.cateLeft=cateAll.map(({cat_name,cat_id})=>({cat_name,cat_id}))
         //  左边的数据--一级分类
         this.cateLeft = cateAll.map((item) => {
@@ -65,6 +73,14 @@ export default {
       },
     });
   },
+  methods:{
+    changeTabs(index){
+      this.activeIndex=index;
+       //  2. 更换右边展示的内容
+      this.cateRight = this.cateAll[index].children;
+   
+    }
+  }
 };
 </script>
 
@@ -80,6 +96,17 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      &.active{
+        color: #eb4450;
+        &::before {
+          content: "";
+          width: 4rpx;
+          height: 44rpx;
+          background-color: #eb4450;
+          position: absolute;
+          left: 0;
+        }
+      }
     }
   }
   .cate_right {
