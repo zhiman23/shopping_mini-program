@@ -24,7 +24,7 @@
           <view class="title">{{ item.cat_name }}</view>
           <view class="list">
             <navigator
-            :url="`pages/goods_list/main?cid=${item2.cat_id}`"
+              :url="`/pages/goods_list/main?cid=${item2.cat_id}`"
               class="item"
               v-for="item2 in item.children"
               :key="item2.cat_id"
