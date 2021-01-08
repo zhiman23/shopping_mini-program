@@ -23,7 +23,8 @@
         <view class="floor" v-for="item in cateRight" :key="item.cat_id">
           <view class="title">{{ item.cat_name }}</view>
           <view class="list">
-            <view
+            <navigator
+            :url="`pages/goods_list/main?cid=${item2.cat_id}`"
               class="item"
               v-for="item2 in item.children"
               :key="item2.cat_id"
@@ -35,7 +36,7 @@
                 mode="aspectFill"
               />
               <text class="item_text">{{ item2.cat_name }}</text>
-            </view>
+            </navigator>
           </view>
         </view>
       </scroll-view>
@@ -67,7 +68,7 @@ export default {
       //获取现在的时间戳
       const now = Date.now();
       const old = uni.getStorageSync("cateAllTime");
-      if (now - old >= 60 * 1000) {
+      if (now - old >= 10 * 60 * 1000) {
         this.getCateData();
       } else {
         this.initData(cateAll);
