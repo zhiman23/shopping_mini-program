@@ -55,6 +55,9 @@ export default {
   methods: {
     // 获取商品列表数据
     async getListData() {
+      uni.showLoading({
+        title: "加载中...",
+      });
       const res = await getGoodsList({
         cid: this.cid,
         pagenum: this.pagenum,
@@ -62,6 +65,8 @@ export default {
       });
       const { goods, total } = res.data.message;
       this.goods = [...this.goods, ...goods];
+      // 请求结束隐藏loading
+      uni.hideLoading();
       // 如果总条数 等于 当前数组长度
       if (total === this.goods.length) {
         // 更新标记，已经没有更多数据了。
