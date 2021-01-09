@@ -42,6 +42,8 @@ export default {
   },
   onReachBottom() {
     console.log("页面准备触底时触发");
+    this.pagenum += 1;
+    this.getListData();
   },
   methods: {
     // 获取商品列表数据
@@ -53,7 +55,7 @@ export default {
       });
       const { goods } = res.data.message;
 
-      this.goods = goods;
+      this.goods = [...this.goods, ...goods];
     },
     getTabsIndex(index) {
       console.log("由子组件传递过来的索引", index);
