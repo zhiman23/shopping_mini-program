@@ -40,7 +40,7 @@ export default {
     };
   },
   onLoad({ cid }) {
-    this.cid = cid || 999;
+    this.cid = cid || 99;
     this.getListData();
   },
   onReachBottom() {
@@ -51,6 +51,14 @@ export default {
       // 重新发送请求
       this.getListData();
     }
+  },
+  async onPullDownRefresh() {
+    console.log("用户下拉页面");
+    this.pagenum = 1;
+    (this.goods = []), (this.hasMore = true);
+    await this.getListData();
+    // 请求完成后，需要主动停止下拉刷新动画
+    uni.stopPullDownRefresh();
   },
   methods: {
     // 获取商品列表数据
