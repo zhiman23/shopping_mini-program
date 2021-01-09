@@ -1,11 +1,20 @@
 <template>
-  <view class="goods_item">
-    <image class="goods_image" :src="item.goods_small_logo" mode="aspectFill" />
+  <navigator
+    :url="`/pages/goods_detail/main?goods_id=${item.goods_id}`"
+    class="goods_item"
+    hover-class="none"
+  >
+    <image
+      lazy-load
+      class="goods_image"
+      :src="item.goods_small_logo"
+      mode="aspectFill"
+    />
     <view class="goods_info">
       <view class="goods_name">{{ item.goods_name }}</view>
       <view class="goods_price">{{ item.goods_price }}</view>
     </view>
-  </view>
+  </navigator>
 </template>
 
 <script>
