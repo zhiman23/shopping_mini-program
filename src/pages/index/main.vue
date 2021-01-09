@@ -9,21 +9,16 @@
       indicator-dots
       interval="3000"
       duration="1000"
-	  circular
-	  indicator-color="#CCC"
-	  indicator-active-color="#EA4350"
+      circular
+      indicator-color="#CCC"
+      indicator-active-color="#EA4350"
     >
-      <swiper-item 
-	  v-for="item in movies" 
-	  :key="item.goods_id">
-        <image 
-		class="swiper_image" 
-		:src="item.image_src" 
-		mode="aspectFill"/>
+      <swiper-item v-for="item in swiperData" :key="item.goods_id">
+        <image class="swiper_image" :src="item.image_src" mode="aspectFill" />
       </swiper-item>
     </swiper>
-	<!-- 入口导航 -->
-	 <view class="nav">
+    <!-- 入口导航 -->
+    <view class="nav">
       <navigator
         v-for="item in navi"
         :key="item.name"
@@ -32,19 +27,11 @@
         :open-type="item.open_type"
         :url="item.navigator_url"
       >
-        <image
-          class="nav_image"
-          :src="item.image_src"
-          mode="aspectFill"
-        />
+        <image class="nav_image" :src="item.image_src" mode="aspectFill" />
       </navigator>
     </view>
-	<!-- 首页楼层 -->
-	 <view
-      v-for="(item,index) in floorData"
-      :key="index"
-      class="floor"
-    >
+    <!-- 首页楼层 -->
+    <view v-for="(item, index) in floorData" :key="index" class="floor">
       <!-- 楼层标题 -->
       <view class="floor_title">
         <image
@@ -68,7 +55,7 @@
             class="floor_list_image"
             :src="item2.image_src"
             mode="aspectFill"
-            :style="'width:'+item2.image_width+'rpx'"
+            :style="'width:' + item2.image_width + 'rpx'"
           />
         </navigator>
       </view>
@@ -78,44 +65,43 @@
 
 <script>
 import search from "@/components/search/index";
+import { homeSwiper } from "@/api";
+
 export default {
   components: {
     search,
   },
   data() {
     return {
-	  movies: [],
-	  navi:[],
-	  floorData:[]
+      swiperData: [],
+      navi: [],
+      floorData: [],
     };
   },
-  onLoad() {
-	  //轮播图
-	  uni.request({
-		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
-		  success:(res)=>{
-			  this.movies=res.data.message
-		  }
-	  }),
-	  //导航栏
-	  uni.request({
-		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/catitems',
-		  success:(res)=>{
-			  this.navi=res.data.message
-		  }
-	  }),
-	  //首页导航
-	  uni.request({
-		  url:'https://api-hmugo-web.itheima.net/api/public/v1/home/floordata',
-		  success:(res)=>{
-			  res.data.message.forEach((item)=>{
-				  item.product_list.forEach((item2)=>{
-					  item2.navigator_url=item2.navigator_url.replace("?","/main?");
-				  })
-			  })
-			  this.floorData=res.data.message
-		  }
-	  })
+  async onLoad() {
+    //轮播图
+    const res = await homeSwiper();
+    this.swiperData = res.data.message;
+
+    //导航栏
+    uni.request({
+      url: "https://api-hmugo-web.itheima.net/api/public/v1/home/catitems",
+      success: (res) => {
+        this.navi = res.data.message;
+      },
+    }),
+      //首页导航
+      uni.request({
+        url: "https://api-hmugo-web.itheima.net/api/public/v1/home/floordata",
+        success: (res) => {
+          res.data.message.forEach((item) => {
+            item.product_list.forEach((item2) => {
+              item2.navigator_url = item2.navigator_url.replace("?", "/main?");
+            });
+          });
+          this.floorData = res.data.message;
+        },
+      });
   },
   methods: {},
 };
