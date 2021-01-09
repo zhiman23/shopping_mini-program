@@ -87,6 +87,8 @@ export default {
         success: (res) => {
           console.log(res.data.message);
           const cateAll = res.data.message;
+          //调用更新到data中
+          this.initData(cateAll);
           // 为了方便在不同的函数中都能找到分类数据，把 cateAll 保存到页面组件中
           uni.setStorageSync("cateAll", cateAll);
           // 把保存到本地存储的时间也存起来
