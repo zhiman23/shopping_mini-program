@@ -6,3 +6,11 @@ export function homeSwiper() {
         url: '/home/swiperdata'
     })
 }
+
+export const getGoodsList = (data) => {
+    return request({
+        method: 'get',
+        url: '/goods/search',
+        data,
+    })
+}

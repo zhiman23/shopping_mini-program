@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { getGoodsList } from "@/api";
 export default {
   data() {
     return {
@@ -14,26 +15,20 @@ export default {
   },
   onLoad({ cid }) {
     this.cid = cid;
-     this.getListData();
+    this.getListData();
   },
-   methods: {
+  methods: {
     // 获取商品列表数据
-    getListData() {
-      uni.request({
-        url: "https://api-hmugo-web.itheima.net/api/public/v1/goods/search",
-        data: {
-          cid: this.cid,
-          pagenum: this.pagenum,
-          pagesize: this.pagesize,
-        },
-        success: (res) => {
-          // console.log(res.data.message);
-          const { goods } = res.data.message;
-          this.goods = goods;
-        },
+    async getListData() {
+      const res = await getGoodsList({
+        cid: this.cid,
+        pagenum: this.pagenum,
+        pagesize: this.pagesize,
       });
+      const { goods } = res.data.messge;
+      this.goods = goods;
     },
-   }
+  },
 };
 </script>
 
