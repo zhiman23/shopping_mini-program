@@ -46,7 +46,7 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#fec22c", //顶部颜色
-		"backgroundColor": "#eb4450" //下拉颜色
+		"backgroundColor": "#d8ecff" //下拉颜色
 	},
 	"tabBar": {
 		"color": "#737373",
@@ -90,6 +90,16 @@
 				"name": "pages/catepory/main",
 				"path": "pages/category/main",
 				"query": ""
+			},
+			{
+				"name": "pages/goods_list/main",
+				"path": "pages/goods_list/main",
+				"query": ""
+			},
+			{
+				"name": "pages/goods_detail/main",
+				"path": "pages/goods_detail/main",
+				"query": "goods_id=54668"
 			}
 		]
 	}
