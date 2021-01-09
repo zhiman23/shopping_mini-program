@@ -7,6 +7,8 @@
     <!-- 商品列表 -->
     <view class="goods_list">
       <goodsitem v-for="item in goods" :key="item.goods_id" :item="item" />
+      <!-- 条件渲染：准备一个底部的提示盒子 -->
+      <view class="tips" v-if="hasMore === false">😀我也是有底线的~</view>
     </view>
   </view>
 </template>
@@ -34,6 +36,7 @@ export default {
       pagenum: 1,
       pagesize: 10,
       goods: [],
+      hasMore: true,
     };
   },
   onLoad({ cid }) {
@@ -41,9 +44,13 @@ export default {
     this.getListData();
   },
   onReachBottom() {
-    console.log("页面准备触底时触发");
-    this.pagenum += 1;
-    this.getListData();
+    if (this.hasMore === true) {
+      console.log("页面准备触底时触发");
+      // 页码加 1
+      this.pagenum += 1;
+      // 重新发送请求
+      this.getListData();
+    }
   },
   methods: {
     // 获取商品列表数据
@@ -53,9 +60,13 @@ export default {
         pagenum: this.pagenum,
         pagesize: this.pagesize,
       });
-      const { goods } = res.data.message;
-
+      const { goods, total } = res.data.message;
       this.goods = [...this.goods, ...goods];
+      // 如果总条数 等于 当前数组长度
+      if (total === this.goods.length) {
+        // 更新标记，已经没有更多数据了。
+        this.hasMore = false;
+      }
     },
     getTabsIndex(index) {
       console.log("由子组件传递过来的索引", index);
@@ -65,4 +76,10 @@ export default {
 </script>
 
 <style lang="less">
+.tips {
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
