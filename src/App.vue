@@ -13,6 +13,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "@/styles/iconfont.css";
 /* css3 变量 */
 page {
   --mainColor: #eb4450;
@@ -24,5 +25,9 @@ page {
     font-size: 80%;
     margin-right: 3rpx;
   }
+}
+.divider {
+  height: 20rpx;
+  background-color: #f9f9f9;
 }
 </style>
