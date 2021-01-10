@@ -1,17 +1,28 @@
 <script>
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
-	}
+export default {
+  onLaunch: function () {
+    console.log("App Launch");
+  },
+  onShow: function () {
+    console.log("App Show");
+  },
+  onHide: function () {
+    console.log("App Hide");
+  },
+};
 </script>
 
-<style>
-	/*每个页面公共css */
+<style lang="less">
+/* css3 变量 */
+page {
+  --mainColor: #eb4450;
+}
+.price {
+  color: var(--mainColor);
+  &::before {
+    content: "¥";
+    font-size: 80%;
+    margin-right: 3rpx;
+  }
+}
 </style>
