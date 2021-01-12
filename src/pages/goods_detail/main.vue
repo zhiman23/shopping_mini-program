@@ -42,10 +42,15 @@
           <view class="iconfont icon-kefu"></view>
           <text class="icon_item_text">联系客服</text>
         </view>
-        <view class="icon_item">
+        <navigator
+          open-type="switchTab"
+          url="/pages/cart/main"
+          class="icon_item"
+          hover-class="none"
+        >
           <view class="iconfont icon-gouwuche"></view>
           <text class="icon_item_text">购物车</text>
-        </view>
+        </navigator>
         <view class="button_item" @tap="addCartHandle">加入购物车</view>
         <view class="button_item">立即购买</view>
       </view>
@@ -103,12 +108,12 @@ export default {
         icon: "none",
       });
     },
-    addCartHandle(){
-      const cartList =uni.getStorageSync("cartList")||[];
-      const index =cartList.findIndex(
-        (item)=>item.goods_id ===this.goods_id
+    addCartHandle() {
+      const cartList = uni.getStorageSync("cartList") || [];
+      const index = cartList.findIndex(
+        (item) => item.goods_id === this.goods_id
       );
-      if(index === -1){
+      if (index === -1) {
         cartList.push({
           goods_id: this.goods_id,
           goods_small_logo: this.goods_small_logo,
@@ -116,19 +121,19 @@ export default {
           goods_price: this.goods_price,
           goods_selected: true,
           goods_count: 1,
-        })
-      }else{
-        cartList[index].goods_count +=1
+        });
+      } else {
+        cartList[index].goods_count += 1;
       }
-       // 存储到本地
+      // 存储到本地
       uni.setStorageSync("cartList", cartList);
       uni.showToast({
-        title: '加入成功',
+        title: "加入成功",
         duration: 2000,
-        mask:true //遮罩层
+        mask: true, //遮罩层
       });
     },
-  }
+  },
 };
 </script>
 
