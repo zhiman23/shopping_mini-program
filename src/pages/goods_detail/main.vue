@@ -2,7 +2,7 @@
   <view
     ><view>
       <navigator class="back" open-type="navigateBack" hover-class="none"
-        >></navigator
+        >⬅</navigator
       >
       <!-- 商品轮播图 -->
       <swiper class="swiper" indicator-dots indicator-active-color="#EB4450">
@@ -78,7 +78,7 @@ export default {
   methods: {
     async getGoodsDetailData() {
       const res = await getGoodsDetail({ goods_id: this.goods_id });
-      let { pics, goods_price, goods_name, goods_introduce } = res.data.message;
+      let { pics, goods_price, goods_name, goods_introduce,goods_small_logo } = res.data.message;
       //按需绑定到data中
       this.pics = pics;
       this.goods_price = goods_price;
