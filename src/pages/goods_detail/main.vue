@@ -1,6 +1,9 @@
 <template>
   <view
     ><view>
+      <navigator class="back" open-type="navigateBack" hover-class="none"
+        >></navigator
+      >
       <!-- 商品轮播图 -->
       <swiper class="swiper" indicator-dots indicator-active-color="#EB4450">
         <swiper-item v-for="(item, index) in pics" :key="item.pics_id">
@@ -16,8 +19,10 @@
       <view class="info">
         <view class="info_head">
           <text class="price">{{ goods_price }}</text>
-          <view class="iconfont icon-zhuanfa"></view>
-          <view class="iconfont icon-shoucang1"></view>
+          <view class="opentype_button_wrap iconfont icon-zhuanfa">
+            <button class="opentype_button" open-type="share">转发按钮</button>
+          </view>
+          <view @tap="collectHandle" class="iconfont icon-shoucang1"></view>
         </view>
         <view class="info_name">
           {{ goods_name }}
@@ -32,7 +37,8 @@
       </view>
       <!-- 底部固定栏 -->
       <view class="bottom">
-        <view class="icon_item">
+        <view class="opentype_button_wrap icon_item">
+          <button class="opentype_button" open-type="contact">联系客服</button>
           <view class="iconfont icon-kefu"></view>
           <text class="icon_item_text">联系客服</text>
         </view>
@@ -40,7 +46,7 @@
           <view class="iconfont icon-gouwuche"></view>
           <text class="icon_item_text">购物车</text>
         </view>
-        <view class="button_item">加入购物车</view>
+        <view class="button_item" @tap="addCartHandle">加入购物车</view>
         <view class="button_item">立即购买</view>
       </view>
     </view></view
@@ -57,6 +63,7 @@ export default {
       goods_price: "",
       goods_name: "",
       goods_introduce: "",
+      goods_small_logo: "",
     };
   },
   onLoad({ goods_id }) {
@@ -71,6 +78,7 @@ export default {
       this.pics = pics;
       this.goods_price = goods_price;
       this.goods_name = goods_name;
+      this.goods_small_logo = goods_small_logo;
       const { system } = uni.getSystemInfoSync();
       const isIOS = system.toLowerCase().includes("ios");
       if (isIOS) {
@@ -86,11 +94,59 @@ export default {
       console.log(urls);
       uni.previewImage({ current, urls });
     },
-  },
+    // 点击收藏按钮
+    collectHandle() {
+      // 提示用户功能升级中
+      uni.showToast({
+        title: "功能升级中...",
+        duration: 1000,
+        icon: "none",
+      });
+    },
+    addCartHandle(){
+      const cartList =uni.getStorageSync("cartList")||[];
+      const index =cartList.findIndex(
+        (item)=>item.goods_id ===this.goods_id
+      );
+      if(index === -1){
+        cartList.push({
+          goods_id: this.goods_id,
+          goods_small_logo: this.goods_small_logo,
+          goods_name: this.goods_name,
+          goods_price: this.goods_price,
+          goods_selected: true,
+          goods_count: 1,
+        })
+      }else{
+        cartList[index].goods_count +=1
+      }
+       // 存储到本地
+      uni.setStorageSync("cartList", cartList);
+      uni.showToast({
+        title: '加入成功',
+        duration: 2000,
+        mask:true //遮罩层
+      });
+    },
+  }
 };
 </script>
 
 <style lang="less">
+.back {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  left: 40rpx;
+  top: 60rpx;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 50%;
+}
 .swiper,
 .swiper_image {
   width: 750rpx;
