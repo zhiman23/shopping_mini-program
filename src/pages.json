@@ -101,6 +101,11 @@
 				"name": "pages/goods_detail/main",
 				"path": "pages/goods_detail/main",
 				"query": "goods_id=54668"
+			},
+			{
+				"name": "pages/cart/main",
+				"path": "pages/cart/main",
+				"query": ""
 			}
 		]
 	}

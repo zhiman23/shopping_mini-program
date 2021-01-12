@@ -7,7 +7,7 @@
     <image
       lazy-load
       class="goods_image"
-      :src="item.goods_small_logo"
+      :src="item.goods_small_logo || '/static/empty.png'"
       mode="aspectFill"
     />
     <view class="goods_info">
