@@ -37,6 +37,12 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "商品详情"
 			}
+		},
+		{
+			"path": "pages/pay/main",
+			"style": {
+				"navigationBarTitleText": "支付"
+			}
 		}
 	],
 	"globalStyle": {

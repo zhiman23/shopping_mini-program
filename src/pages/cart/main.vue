@@ -11,28 +11,36 @@
           />
         </view>
         <view class="cart_item_right">
-          <GoodsItem :item="item" />
+          <goodsitem :item="item" />
           <view class="cart_count">
-            <view class="iconfont icon-jianshao"></view>
+            <view
+              @tap="changeCount(item.goods_id, -1)"
+              class="iconfont icon-jianshao"
+            ></view>
             <text class="cart_count_text">{{ item.goods_count }}</text>
-            <view class="iconfont icon-zengjia"></view>
+            <view
+              @tap="changeCount(item.goods_id, 1)"
+              class="iconfont icon-zengjia"
+            ></view>
           </view>
         </view>
       </view>
     </view>
 
-    <view class="bottom">
-      <radio color="#EB4450" class="bottom_select" />
+    <view v-if="cartList.length" class="bottom">
+      <radio
+        color="#EB4450"
+        :checked="isSelectAll"
+        class="bottom_select"
+        @tap="changeSelectAllHandle"
+      />
       <text class="select_text">全选</text>
       <text class="total_text">合计：</text>
       <text class="total_price price">{{ totaiPrice }}</text>
-      <view class="account">结算{{ account }}</view>
+      <view class="account" @tap="goToPayHandle">结算{{ account }}</view>
     </view>
 
-    <view
-      v-if="cartList.length === 0"
-      class="cart_empty"
-    >
+    <view v-if="cartList.length === 0" class="cart_empty">
       <image
         class="empty_image"
         mode="widthFix"
@@ -43,7 +51,8 @@
         open-type="switchTab"
         hover-class="none"
         class="empty_button"
-      >去首页看看</navigator>
+        >去首页看看</navigator
+      >
     </view>
   </view>
 </template>
@@ -60,6 +69,9 @@ export default {
     };
   },
   computed: {
+    isSelectAll(){
+      return this.cartList.every((item)=>item.goods_selected)
+    },
     totalPrice() {
       let totalPrice = 0;
       this.cartList.forEach((item) => {
@@ -90,6 +102,53 @@ export default {
       );
       this.cartList[index].goods_selected = !this.cartList[index]
         .goods_selected;
+    },
+    changeCount(goods_id, number) {
+      const index = this.cartList.findIndex(
+        (item) => item.goods_id === goods_id
+      );
+      if (number === -1 && this.cartList[index].goods_count === 1) {
+        uni.showModal({
+          content: "是否删除当前商品？",
+          confirmText: "删除",
+          confirmColor: "#ccc",
+          // 记得修改成箭头函数
+          success: (res) => {
+            if (res.confirm) {
+              // console.log("用户点击确定");
+              this.cartList.splice(index, 1);
+            }
+          },
+        });
+      } else {
+        this.cartList[index].goods_count += number;
+      }
+    },
+    changeSelectAllHandle() {
+      const di = !this.isSelectAll;
+      this.cartList.forEach((item) => {
+        item.goods_selected = di;
+      });
+    },
+    goToPayHandle() {
+      if (this.account === 0) {
+        uni.showToast({
+          title: "请选择商品",
+          icon: "none",
+          duration: 1000,
+        });
+      } else {
+        // 通过 API 的方式跳转页面
+        uni.navigateTo({ url: "/pages/pay/main" });
+      }
+    },
+  },
+  watch: {
+    cartList: {
+      deep: true,
+      handler: (val) => {
+        uni.setStorageSync("cartList", val);
+      },
     },
   },
 };
