@@ -112,6 +112,11 @@
 				"name": "pages/cart/main",
 				"path": "pages/cart/main",
 				"query": ""
+			},
+			{
+				"name": "pages/pay/main",
+				"path": "pages/pay/main",
+				"query": ""
 			}
 		]
 	}
