@@ -78,7 +78,13 @@ export default {
   methods: {
     async getGoodsDetailData() {
       const res = await getGoodsDetail({ goods_id: this.goods_id });
-      let { pics, goods_price, goods_name, goods_introduce,goods_small_logo } = res.data.message;
+      let {
+        pics,
+        goods_price,
+        goods_name,
+        goods_introduce,
+        goods_small_logo,
+      } = res.data.message;
       //按需绑定到data中
       this.pics = pics;
       this.goods_price = goods_price;
@@ -129,7 +135,7 @@ export default {
       uni.setStorageSync("cartList", cartList);
       uni.showToast({
         title: "加入成功",
-        duration: 2000,
+        duration: 1000,
         mask: true, //遮罩层
       });
     },
