@@ -36,8 +36,9 @@
       />
       <text class="select_text">全选</text>
       <text class="total_text">合计：</text>
-      <text class="total_price price">{{ totaiPrice }}</text>
-      <view class="account" @tap="goToPayHandle">结算{{ account }}</view>
+      <text class="total_price price">{{ totalPrice }}</text>
+      <view @tap="yyyy" class="yyyy">一键删除</view>
+      <view class="account" @tap="goToPayHandle">结算({{ account }})</view>
     </view>
 
     <view v-if="cartList.length === 0" class="cart_empty">
@@ -69,8 +70,8 @@ export default {
     };
   },
   computed: {
-    isSelectAll(){
-      return this.cartList.every((item)=>item.goods_selected)
+    isSelectAll() {
+      return this.cartList.every((item) => item.goods_selected);
     },
     totalPrice() {
       let totalPrice = 0;
@@ -96,6 +97,18 @@ export default {
     this.cartList = uni.getStorageSync("cartList") || [];
   },
   methods: {
+    yyyy() {
+      uni.showModal({
+        content: "一键删除？",
+        confirmText: "确定",
+        confirmColor: "#bf0317",
+        success: (res) => {
+          if (res.confirm) {
+            this.cartList = [];
+          }
+        },
+      });
+    },
     changeSelectHandle(goods_id) {
       const index = this.cartList.findIndex(
         (item) => item.goods_id === goods_id
@@ -112,7 +125,7 @@ export default {
           content: "是否删除当前商品？",
           confirmText: "删除",
           confirmColor: "#ccc",
-          // 记得修改成箭头函数
+          // 记得修改成箭头函数  郭梓厚
           success: (res) => {
             if (res.confirm) {
               // console.log("用户点击确定");
@@ -193,6 +206,80 @@ export default {
         }
       }
     }
+  }
+}
+.bottom {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  position: fixed;
+  // 同时设置左右，可以拉伸出宽度
+  left: 0;
+  right: 0;
+  bottom: 0;
+  bottom: var(--window-bottom);
+  /* #endif */
+  background-color: #fff;
+  border-top: 1rpx solid #ddd;
+  .select_text {
+    font-size: 22rpx;
+    color: #999;
+    margin-left: 10rpx;
+  }
+  .total_text {
+    font-size: 26rpx;
+    margin-left: 20rpx;
+  }
+  .price {
+    font-size: 36rpx;
+    flex: 1;
+  }
+  .account {
+    width: 150rpx;
+    height: 52rpx;
+    background-color: var(--mainColor);
+    color: #fff;
+    border-radius: 30rpx;
+    font-size: 22rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .yyyy {
+    width: 150rpx;
+    height: 52rpx;
+    background-color: var(--mainColor);
+    color: #fff;
+    border-radius: 30rpx;
+    font-size: 22rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20rpx;
+  }
+}
+.cart_empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  .empty_image {
+    width: 400rpx;
+  }
+  .empty_button {
+    margin-top: 20rpx;
+    width: 200rpx;
+    height: 60rpx;
+    color: #fff;
+    background-color: var(--mainColor);
+    border-radius: 30rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22rpx;
   }
 }
 </style>
